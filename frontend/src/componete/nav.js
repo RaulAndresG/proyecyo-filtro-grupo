@@ -8,8 +8,8 @@ import agregar from '../Img/agregar.png'
 import settings from '../Img/settings.png'
 import campanita from '../Img/campanita.png'
 import Foto from '../Img/Pedro.jpeg'
-
-import { BrowserRouter as Router } from 'react-router-dom';
+import './ayuda'
+import { BrowserRouter as Router,Route } from 'react-router-dom';
 import {Link} from 'react-router-dom'
 import './nav.css'; 
 
@@ -21,7 +21,7 @@ const Navigation = () => {
 
         <div className='logos' >
         <img className='logoss' src={agregar} ></img>
-          <Link to="/" className="link">Añadir</Link>
+          <Link  to='/' className="link">Añadir</Link>
         </div>
 
         <div className='logos' >
@@ -39,14 +39,14 @@ const Navigation = () => {
         </div>
  
         <div className='logos'>
-          <img className='logoss' src={bug} ></img>
-          <Link to="/page4" className="link">Reportar</Link>
+          <img className='logoss' src={ayuda} ></img>
+          <Link to="/ayuda" className="link">Reportar</Link>
         </div>
-
+{/* 
         <div className='logos' >
         <img className='logoss' src={ayuda} ></img>
-          <Link to="/page5" className="link">Ayuda</Link>
-        </div>
+          <Link to="/ayuda.js" className="link">Ayuda</Link>
+        </div> */}
 
         <div className='settingsContenedor' >
         <img className='settings' src={settings} ></img>
