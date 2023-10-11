@@ -1,4 +1,4 @@
-.pagina{
+ .pagina{
     font-weight:normal;
 }
 
@@ -7,7 +7,7 @@
 }
 
   .rectangulo td {
-    border-radius: 10px; /* Elimina los bordes redondeados de las celdas */
+    border-radius: 10px; 
   }
   
   .tabla-container {
@@ -198,7 +198,8 @@
 
 .demo-progress .el-progress--circle {
   margin-right: 15px;
-}
+} 
 
   
-  
+  /* ayuda.css */
+/* ayuda.css */

@@ -1,7 +1,40 @@
 import React, { useState, useEffect } from "react";
-import "./pagina.css";
+import "./ayuda.css";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-const HelpPage = () => {
+const AyudaCard = ({ titulo, descripcion, categoria, instrucciones }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // Redirige a la página principal o cualquier otra página que desees.
+    navigate("/");
+  };
+
+  return (
+    <div className="rectangulo" onClick={handleClick}>
+      <div className="informacion">
+        <div className="info1">{titulo}</div>
+        <div className="info2">{descripcion}</div>
+        <div className="info3">{categoria}</div>
+        <ul>
+          {instrucciones.map((instruccion, index) => (
+            <li key={index}>{instruccion}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+AyudaCard.propTypes = {
+  titulo: PropTypes.string.isRequired,
+  descripcion: PropTypes.string.isRequired,
+  categoria: PropTypes.string.isRequired,
+  instrucciones: PropTypes.array.isRequired,
+};
+
+const AyudaCrud = () => {
   const [helpData, setHelpData] = useState([]);
 
   useEffect(() => {
@@ -26,38 +59,18 @@ const HelpPage = () => {
         </p>
       </div>
       <div className="tabla-container">
-        <table className="tabla">
-          <thead>
-            <tr>
-              <th colSpan={3} className="titulo-container">
-                <div className="titulo1">Título</div>
-                <div className="titulo2">Descripción</div>
-                <div className="titulo3">Categoría</div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {helpData.map((item) => (
-              <tr key={item._id} className="rectangulo">
-                <td colSpan={3}>
-                  <div className="informacion">
-                    <div className="info1">{item.titulo}</div>
-                    <div className="info2">{item.descripcion}</div>
-                    <div className="info3">{item.categoria}</div>
-                    <ul>
-                      {item.instrucciones.map((instruccion, index) => (
-                        <li key={index}>{instruccion}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {helpData.map((item) => (
+          <AyudaCard
+            key={item._id}
+            titulo={item.titulo}
+            descripcion={item.descripcion}
+            categoria={item.categoria}
+            instrucciones={item.instrucciones}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
-export default HelpPage;
+export default AyudaCrud;

@@ -7,7 +7,7 @@ const Panel = () => {
   const [data, setData] = useState([]);
   const [percentage, setPercentage] = useState(0);
   const [animationDirection, setAnimationDirection] = useState('forwards');
-  const [userInput, setUserInput] = useState(20);
+  const [userInput, setUserInput] = useState(75);
   
   useEffect(() => {
     // Realiza una solicitud a la API para obtener los datos

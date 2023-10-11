@@ -9,10 +9,11 @@ function App() {
       <Nav></Nav>
       </div>
       <div>
-        <Pagina></Pagina>
+        <Pagina> </Pagina>
       </div>
     </div>
   );
 }
 
 export default App;
+
