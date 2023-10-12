@@ -67,13 +67,14 @@
   }
   
   /* Estilo del botón de cierre */
-  .modal-container button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
+/* Agrega estos estilos al botón */
+.modal-container button {
+  background: #da5b06e3; /* Cambia el fondo a naranja */
+  color: #000; /* Cambia el color del texto a negro */
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
   

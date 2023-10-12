@@ -1,86 +1,88 @@
 import React, { useState } from "react";
 import { Button, Form } from 'semantic-ui-react';
 import axios from "axios";
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-
+import './create.css'
+import { useNavigate } from "react-router-dom";
 
 export default function Create() {
-  let history = useHistory();
-  const [indicador, setIndicador] = useState('');
-  const [descripcion, setDescripcion] = useState('');
-  const [categoria, setCategoria] = useState('');
-  const [fechaInicio, setFechaInicio] = useState(''); 
-  const [fechaTerminacion, setFechaTerminacion] = useState(''); 
-  const [formula, setFormula] = useState(''); 
-  const [frecuencia, setFrecuencia] = useState(''); 
-  const [cumplimiento, setCumplimiento] = useState(0); 
-  const [area, setArea] = useState(''); 
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    indicador: '',
+    descripcion: '',
+    categoria: '',
+    fecha_inicio: '',
+    fecha_terminacion: '',
+    formula: '',
+    frecuencia: '',
+    cumplimiento: 0,
+    area: '',
+  });
   const [error, setError] = useState('');
 
-  const postData = () => {
-    axios.post(`http://localhost:7777/api/Indicadores`, {
-      indicador,
-      descripcion,
-      categoria,
-      fecha_inicio: fechaInicio, 
-      fecha_terminacion: fechaTerminacion, 
-      formula, 
-      frecuencia, 
-      cumplimiento, 
-      area, 
-      error
-    }).then(() => {
-      history.push('/pagina');
-    })
-    .catch((error) => {
-      console.error('Error al crear el elemento:', error);
-      setError('Error al crear el elemento. Por favor, inténtalo de nuevo.');
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
     });
   };
 
-  return (
-    <div>
-      <Form className="create-form">
-        <Form.Field>
-          <label>Nombre</label>
-          <input placeholder="Nombre" value={indicador} onChange={(e) => setIndicador(e.target.value)} ></input>
-        </Form.Field>
-        <Form.Field>
-          <label>Descripción</label>
-          <input placeholder="Descripción" value={descripcion} onChange={(e) => setDescripcion(e.target.value)} ></input>
-        </Form.Field>
-        <Form.Field>
-          <label>Categoría</label>
-          <input placeholder="Categoría" value={categoria} onChange={(e) => setCategoria(e.target.value)} ></input>
-        </Form.Field>
-        <Form.Field>
-          <label>Fecha de Inicio</label>
-          <input placeholder="Fecha de Inicio" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} ></input>
-        </Form.Field>
-        <Form.Field>
-          <label>Fecha de Terminación</label>
-          <input placeholder="Fecha de Terminación" value={fechaTerminacion} onChange={(e) => setFechaTerminacion(e.target.value)} ></input>
-        </Form.Field>
-        <Form.Field>
-          <label>Formula</label>
-          <input placeholder="Formula" value={formula} onChange={(e) => setFormula(e.target.value)} ></input>
-        </Form.Field>
-        <Form.Field>
-          <label>Frecuencia</label>
-          <input placeholder="Frecuencia" value={frecuencia} onChange={(e) => setFrecuencia(e.target.value)} ></input>
-        </Form.Field>
-        <Form.Field>
-          <label>Cumplimiento</label>
-          <input type="number" placeholder="Cumplimiento" value={cumplimiento} onChange={(e) => setCumplimiento(e.target.value)} ></input>
-        </Form.Field>
-        <Form.Field>
-          <label>Área</label>
-          <input placeholder="Área" value={area} onChange={(e) => setArea(e.target.value)} ></input>
-        </Form.Field>
-        <Button type="submit" onClick={postData}>Crear</Button>
-      </Form>
-    </div>
-  );
-}
+  const postData = async () => {
+    try {
+      const response = await axios.post('http://localhost:7777/api/Indicadores', formData);
+      console.log(response.data);
+      navigate('/pagina'); // Redirige a la página deseada después de la creación exitosa
+    } catch (error) {
+      console.error('Error al crear el elemento:', error);
+      setError('Error al crear el elemento. Por favor, inténtalo de nuevo.');
+    }
+  };
 
+ // Tu componente React
+// Tu componente React
+return (
+  <div className="form-container">
+    <Form className="create-form">
+      <Form.Field className="form-field">
+        <label className="form-label">Indicador</label>
+        <input className="form-input" name="indicador" placeholder="Nombre" value={formData.indicador} onChange={handleInputChange} />
+      </Form.Field>
+      <Form.Field className="form-field">
+        <label className="form-label">Descripción</label>
+        <input className="form-input" name="descripcion" placeholder="Descripción" value={formData.descripcion} onChange={handleInputChange} />
+      </Form.Field>
+      <Form.Field className="form-field">
+        <label className="form-label">Categoría</label>
+        <input className="form-input" name="categoria" placeholder="Categoría" value={formData.categoria} onChange={handleInputChange} />
+      </Form.Field>
+      <Form.Field className="form-field">
+        <label className="form-label">Fecha de Inicio</label>
+        <input className="form-input" name="fecha_inicio" type="date" value={formData.fecha_inicio} onChange={handleInputChange} />
+      </Form.Field>
+      <Form.Field className="form-field">
+        <label className="form-label">Fecha de Terminación</label>
+        <input className="form-input" name="fecha_terminacion" type="date" value={formData.fecha_terminacion} onChange={handleInputChange} />
+      </Form.Field>
+      <Form.Field className="form-field">
+        <label className="form-label">Formula</label>
+        <input className="form-input" name="formula" placeholder="Formula" value={formData.formula} onChange={handleInputChange} />
+      </Form.Field>
+      <Form.Field className="form-field">
+        <label className="form-label">Frecuencia</label>
+        <input className="form-input" name="frecuencia" placeholder="Frecuencia" value={formData.frecuencia} onChange={handleInputChange} />
+      </Form.Field>
+      <Form.Field className="form-field">
+        <label className="form-label">Cumplimiento</label>
+        <input className="form-input" name="cumplimiento" type="number" placeholder="Cumplimiento" value={formData.cumplimiento} onChange={handleInputChange} />
+      </Form.Field>
+      <Form.Field className="form-field">
+        <label className="form-label">Área</label>
+        <input className="form-input" name="area" placeholder="Área" value={formData.area} onChange={handleInputChange} />
+      </Form.Field>
+      <Button className="form-button" type="submit" onClick={postData}>Crear</Button>
+    </Form>
+    {error && <p className="error-message">{error}</p>}
+  </div>
+);
+
+}

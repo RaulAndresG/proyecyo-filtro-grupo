@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Modal from "./Modal"; 
+import Modal from "./Modal"; // Asegúrate de que la ruta sea correcta
 import burguer from '../Img/burguer.png';
 import './pagina.css';
 import './modal.css'; 
@@ -9,11 +9,9 @@ const Panel = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  const [percentage, setPercentage] = useState(0);
-  const [animationDirection, setAnimationDirection] = useState('forwards');
-  const [userInput, setUserInput] = useState(75);
 
   useEffect(() => {
+    // Realiza una solicitud a la API para obtener los datos
     fetch('http://localhost:7777/api/Indicadores')
       .then(response => response.json())
       .then(data => {
@@ -26,52 +24,20 @@ const Panel = () => {
       });
   }, []);
 
-
-  const handleRowClick = (item) => {
-    setSelectedItem(item);
-    setModalIsOpen(true);
-  };
-
-  const scaledPercentage = (percentage / 100) * 70;
-  const handleInputChange = (e) => {
-    const value = parseInt(e.target.value, 100);
-    if (!isNaN(value) && value >= 0 && value <= 100) {
-      setUserInput(value);
-    }
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (percentage < userInput) {
-        setPercentage(percentage + 1);
-      } else if (percentage > userInput) {
-        setPercentage(percentage - 1);
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, [percentage, userInput]);
-
+  // Función para obtener el color del círculo según el cumplimiento
   const getCircleColor = (cumplimiento) => {
     if (cumplimiento >= 80) {
       return 'green';
-    } if (cumplimiento >= 60) {
-      return 'green';
-    } else if (cumplimiento >= 50) {
-      return 'orange';
-    } else if (cumplimiento >= 30) {
+    } else if (cumplimiento >= 60) {
       return 'orange';
     } else {
       return 'red';
     }
   };
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }, []);
+
+  // Función para calcular el porcentaje de llenado del círculo
   const calculateCirclePercentage = (cumplimiento) => {
-    return (cumplimiento / 100) * 85; 
+    return (cumplimiento / 100) * 85; // Ajusta el valor según tu preferencia
   };
 
   return (
@@ -105,7 +71,7 @@ const Panel = () => {
                 onClick={() => handleRowClick(item)} 
                 style={{ cursor: "pointer" }} 
               >
-        <td colSpan={9}>
+                <td colSpan={9}>
                   <div className="informacion">
                     <div className="info1">{item.indicador}</div>
                     <div className="info2">{item.descripcion}</div>
@@ -136,7 +102,6 @@ const Panel = () => {
                     <img alt="" className="burguer" src={burguer} />
                   </div>
                 </td>
-
               </tr>
             ))}
           </tbody>

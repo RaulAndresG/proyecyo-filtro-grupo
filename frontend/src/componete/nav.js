@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; // Importa Routes y Route
+import { BrowserRouter as div,Routes,Route, Link } from 'react-router-dom'; // Importa Routes y Route
 import logo from '../Img/KARIO_LOGO.png'
 import bug from '../Img/bug.png'
 import reload from '../Img/relaod.png'
@@ -16,50 +17,49 @@ import './nav.css'
 
 const Navigation = () => {
   return (
-    <Router>
+    <div>
       <nav className="nav">
         <div className="links">
-          <div className='logos'>
-            <img className='logoss' src={agregar} />
-            <Link to="/" className="link">Añadir</Link>
+        <div className='logos'>
+            <img alt='' className='logoss' src={agregar} />
+            <Link to="/create" className="link">Añadir</Link>
           </div>
 
           <div className='logos'>
-            <img className='logoss' src={reload} />
+            <img alt='' className='logoss' src={reload} />
             <Link to="/page2" className="link">Refrescar</Link>
           </div>
 
           <div className='logos'>
-            <img className='logoss' src={trash} />
+            <img alt='' className='logoss' src={trash} />
             <Link to="/page3" className="link">Eliminar</Link>
           </div>
 
           <div className='logos'>
-            <img className='logo' src={logo} />
+            <img alt='' className='logo' src={logo} />
           </div>
 
           <div className='logos'>
-            <img className='logoss' src={bug} />
+            <img alt='' className='logoss' src={bug} />
             <Link to="/page4" className="link">Reporte</Link>
           </div>
 
           <div className='logos'>
-            <img className='logoss' src={ayudas} />
+            <img alt='' className='logoss' src={ayudas} />
             <Link to="/ayuda" className="link">Ayuda</Link>
           </div>
           <div className='settingsContenedor' >
-            <img className='settings' src={settings} ></img>
-            <img className='settingss' src={campanita} ></img>
-            <img className='logoFoto' src={Foto} ></img>
+            <img alt='' className='settings' src={settings} ></img>
+            <img alt='' className='settingss' src={campanita} ></img>
+            <img alt='' className='logoFoto' src={Foto} ></img>
           </div>
         </div>
-
         
       </nav>
       <Routes>
         <Route path="/ayuda" element={<AyudaCrud />} />
       </Routes>
-    </Router>
+    </div>
   );
 };
 

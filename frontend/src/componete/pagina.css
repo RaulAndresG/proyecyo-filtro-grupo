@@ -162,11 +162,11 @@
     margin-left: 40px;
   }
 
-  .info2{
+/*   .info2{
     margin-left: 120px;
     margin-right: -40px;
   }
-
+ */
   .info3{
     margin-left: 140px;
   }
@@ -180,10 +180,10 @@
     margin-left: 40px;
     margin-right: 0px;
   }
-
+/* 
   .info6{
     margin-left: 40px;
-  }
+  } */
 
   .info9{
     margin-right: 10px;
@@ -195,7 +195,14 @@
     height: 20px;
   }
 
-
+  .info2,
+  .info6 {
+    max-width: 150px; /* Ajusta el ancho máximo según tus preferencias */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
 .demo-progress .el-progress--circle {
   margin-right: 15px;
 }
