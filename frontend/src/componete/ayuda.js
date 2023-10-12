@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./ayuda.css";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
 
 const AyudaCard = ({ titulo, descripcion, categoria, instrucciones }) => {
   const navigate = useNavigate();

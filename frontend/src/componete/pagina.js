@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
+import Modal from "./Modal"; // Asegúrate de que la ruta sea correcta
 import burguer from '../Img/burguer.png';
 import './pagina.css';
+import './modal.css'; 
 
 const Panel = () => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [percentage, setPercentage] = useState(0);
   const [animationDirection, setAnimationDirection] = useState('forwards');
   const [userInput, setUserInput] = useState(75);
-  
+
   useEffect(() => {
     // Realiza una solicitud a la API para obtener los datos
     fetch('http://localhost:7777/api/Indicadores')
@@ -23,7 +27,22 @@ const Panel = () => {
       });
   }, []);
 
-  // ... el resto de tu código
+  // ...
+
+  // Cuando se hace clic en un elemento, abrir el modal y establecer el elemento seleccionado
+  const handleRowClick = (item) => {
+    setSelectedItem(item);
+    setModalIsOpen(true);
+  };
+
+  // Escalamos el porcentaje para limitar el llenado máximo al 90%
+  const scaledPercentage = (percentage / 100) * 70;
+  const handleInputChange = (e) => {
+    const value = parseInt(e.target.value, 100);
+    if (!isNaN(value) && value >= 0 && value <= 100) {
+      setUserInput(value);
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -46,31 +65,12 @@ const Panel = () => {
       return 'red';
     }
   };
-
-
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 2000);
   }, []);
 
-  // Escalamos el porcentaje para limitar el llenado máximo al 90%
-  const scaledPercentage = (percentage / 100) * 70;
-
-  const handleInputChange = (e) => {
-    const value = parseInt(e.target.value, 100);
-    if (!isNaN(value) && value >= 0 && value <= 100) {
-      setUserInput(value);
-    }
-  };
-
-
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }, []);
   return (
     <div className="app">
       <div>
@@ -80,7 +80,7 @@ const Panel = () => {
       <div className="tabla-container">
         <table className="tabla">
           <thead>
-          <tr>
+            <tr>
               <th colSpan={9} className="titulo-container">
                 <div className="titulo1">Indicador</div>
                 <div className="titulo2">Descripcion</div>
@@ -96,7 +96,12 @@ const Panel = () => {
           </thead>
           <tbody>
             {data.map((item) => (
-              <tr key={item._id} className="rectangulo">
+              <tr
+                key={item._id}
+                className="rectangulo"
+                onClick={() => handleRowClick(item)} 
+                style={{ cursor: "pointer" }} 
+              >
                 <td colSpan={9}>
                   <div className="informacion">
                     <div className="info1">{item.indicador}</div>
@@ -108,21 +113,21 @@ const Panel = () => {
                     <div className="info7">{item.frecuencia}</div>
                     <div className="circle-loader">
                       <svg width="60" height="60">
-                      <circle
-                        className="circle"
-                        cx="30"
-                        cy="30"
-                        r="27"
-                        stroke={getCircleColor()}
-                        strokeWidth="7"
-                        fill="none"
-                        strokeDasharray="251"
-                        strokeDashoffset={(251 * (100 - scaledPercentage)) / 100}
-                        style={{ animationDirection1: animationDirection }}
-                      />
-                      <text x="30" y="30" textAnchor="middle" dy="0.3em" className="percentage">
-                        {percentage}%
-                      </text>
+                        <circle
+                          className="circle"
+                          cx="30"
+                          cy="30"
+                          r="27"
+                          stroke={getCircleColor()}
+                          strokeWidth="7"
+                          fill="none"
+                          strokeDasharray="251"
+                          strokeDashoffset={(251 * (100 - scaledPercentage)) / 100}
+                          style={{ animationDirection: animationDirection }}
+                        />
+                        <text x="30" y="30" textAnchor="middle" dy="0.3em" className="percentage">
+                          {percentage}%
+                        </text>
                       </svg>
                     </div>
                     <div className="info9">{item.area}</div>
@@ -134,6 +139,9 @@ const Panel = () => {
           </tbody>
         </table>
       </div>
+      {modalIsOpen && (
+        <Modal item={selectedItem} onClose={() => setModalIsOpen(false)} />
+      )}
     </div>
   );
 };
